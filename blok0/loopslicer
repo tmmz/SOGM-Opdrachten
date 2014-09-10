@@ -1,0 +1,27 @@
+#! /bin/bash
+
+
+
+if [ $# -lt 2 ]; then
+  echo "$0: Geef svp filenaam, aantal slices"
+else
+  echo "filenaam: " `basename $1`
+  echo "slices: " $2
+  echo "samples: " `soxi -s $1`
+
+  filetype=`soxi -t $1`
+  echo "filetype: " $filetype
+
+  c=$(( `soxi -s $1` / $2 ))s
+  echo $c 
+
+  filename=`basename $1 .$filetype`
+  echo $filename
+fi
+
+for i in `seq 1 $2`
+
+do
+	`sox $1 ${filename}${i}.aif trim 0 $c`
+ echo $filename$i 
+done
