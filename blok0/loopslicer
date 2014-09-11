@@ -1,27 +1,34 @@
 #! /bin/bash
 
+# LOOPSLICER
 
 
+
+# Als er minder dan 2 argumenten worden ingevuld
 if [ $# -lt 2 ]; then
-  echo "$0: Geef svp filenaam, aantal slices"
+  echo "$0: Geef svp filenaam, aantal slices en extensie"
 else
   echo "filenaam: " `basename $1`
   echo "slices: " $2
   echo "samples: " `soxi -s $1`
 
+# Het type bestand opvragen
   filetype=`soxi -t $1`
   echo "filetype: " $filetype
 
-  c=$(( `soxi -s $1` / $2 ))s
+# 1 Slice
+  c=$(( `soxi -s $1` / $2 ))
   echo $c 
 
-  filename=`basename $1 .$filetype`
-  echo $filename
+# Alleen de bestandsnaam zonder enige toevoeging
+  filename=`basename $1 $3`
 fi
 
-for i in `seq 1 $2`
+# Sequentie om X($2) aantal slices te trimmen
+for(( i=0; i<$2; i++ ))
 
 do
-	`sox $1 ${filename}${i}.aif trim 0 $c`
+  positie=$(($i * $c))s
+	`sox $1 ${filename}${i}${3} trim $positie $c"s"`
  echo $filename$i 
 done
