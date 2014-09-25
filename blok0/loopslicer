@@ -5,30 +5,42 @@
 
 
 # Als er minder dan 2 argumenten worden ingevuld
-if [ $# -lt 2 ]; then
+if [ $# -lt 3 ]; then
   echo "$0: Geef svp filenaam, aantal slices en extensie"
 else
-  echo "filenaam: " `basename $1`
-  echo "slices: " $2
-  echo "samples: " `soxi -s $1`
+  filenaam=$1
+  slices=$2
+  extensie=$3
+  samples=`soxi -s $filenaam`
+  dir=$(dirname "$filenaam") 
+  filetype=`soxi -t $filenaam`
 
-# Het type bestand opvragen
-  filetype=`soxi -t $1`
+ 
+
+  echo "filenaam: " `basename "$filenaam"`
   echo "filetype: " $filetype
+  echo "dir:" $dir
+
+  echo "slices: " $slices
+  echo "samples:" $samples
+
 
 # 1 Slice
-  c=$(( `soxi -s $1` / $2 ))
+  
+c=$(( `soxi -s $filenaam` / $slices ))
+#(( c = `soxi -s $1` / $2))
   echo $c 
 
 # Alleen de bestandsnaam zonder enige toevoeging
-  filename=`basename $1 $3`
+name=`basename $filenaam $extensie`
+echo "basename:" $name
 fi
 
 # Sequentie om X($2) aantal slices te trimmen
-for(( i=0; i<$2; i++ ))
+for(( i=0; i<$slices; i++ ))
 
 do
   positie=$(($i * $c))s
-	`sox $1 ${filename}${i}${3} trim $positie $c"s"`
- echo $filename$i 
+	`sox $filenaam ${dir}"/"${name}${i}${extensie} trim $positie $c"s"`
+ echo "newfile:" $name$i 
 done
