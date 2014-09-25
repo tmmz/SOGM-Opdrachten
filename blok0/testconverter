@@ -1,0 +1,46 @@
+#! /bin/bash
+
+# wav naar mp3 converter
+
+
+if [ $# -lt 2 ]; then
+echo "input must be: Original Filetype and New Filetype"
+
+
+
+else
+	filetype1=$1
+	echo "old filetype:" $filetype1
+	filetype2=$2
+	echo "new filetype:" $filetype2
+    echo "are you sure? (y/n)"
+    read answer
+
+    if [ $answer == y ]; then
+
+    	for i in *$filetype1
+
+do 
+
+#echo $i
+name=`basename $i $filetype1`
+dir=$(dirname "$i")
+#echo $i
+
+ `lame -q 0 $i ${name}${filetype2}`	
+
+done
+
+else 
+
+	echo "DAN NIET JOH!"
+
+
+fi
+
+
+fi
+
+
+
+
