@@ -27,7 +27,7 @@ name=`basename $i $filetype1`
 dir=$(dirname "$i")
 #echo $i
 
- `lame -q 0 $i ${name}${filetype2}`	
+ `lame -q0 $i ${name}${filetype2}`	
 
 done
 

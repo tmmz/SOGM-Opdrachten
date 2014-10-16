@@ -6,10 +6,26 @@
 if [ $# -lt 2 ]; then
 echo "input must be: Filename en Filetype"
 
+
+
 else
 
-filename=`basename $1 $2 ` 
-echo $filename
- `lame -h $1 $filename".mp3"`
+	echo "goedzo"
 
 fi
+
+	for(( i=0; i<1; i++ ))
+
+do
+filename=$1
+echo "filenaam:" `basename $filename`
+filetype=$2
+echo "filetype:" $filetype
+dir=$(dirname "$filename")
+echo "dir:" $dir
+
+name=`basename $filename $filetype` 
+echo $name
+ `lame -q0 $filename $name".mp3"`
+
+done

@@ -11,13 +11,13 @@ else
   filenaam=$1
   slices=$2
   extensie=$3
-  samples=`soxi -s $filenaam`
-  dir=$(dirname "$filenaam") 
-  filetype=`soxi -t $filenaam`
+  samples=`soxi -s "${filenaam}"`
+  dir=$(dirname "${filenaam}") 
+  filetype=`soxi -t "${filenaam}"`
 
  
 
-  echo "filenaam: " `basename "$filenaam"`
+  echo "filenaam: " `basename "${filenaam}"`
   echo "filetype: " $filetype
   echo "dir:" $dir
 
@@ -27,12 +27,12 @@ else
 
 # 1 Slice
   
-c=$(( `soxi -s $filenaam` / $slices ))
+c=$(( `soxi -s "${filenaam}"` / $slices ))
 #(( c = `soxi -s $1` / $2))
   echo $c 
 
 # Alleen de bestandsnaam zonder enige toevoeging
-name=`basename $filenaam $extensie`
+name=`basename "${filenaam}" $extensie`
 echo "basename:" $name
 fi
 
@@ -41,6 +41,6 @@ for(( i=0; i<$slices; i++ ))
 
 do
   positie=$(($i * $c))s
-	`sox $filenaam ${dir}"/"${name}${i}${extensie} trim $positie $c"s"`
+	`sox "${filenaam}" "${dir}/${name}${i}${extensie}" trim $positie $c"s"`
  echo "newfile:" $name$i 
 done
