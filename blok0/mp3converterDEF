@@ -6,39 +6,62 @@
 if [ $# -lt 2 ]; then
 echo "input must be: Original Filetype and New Filetype"
 
+				
 
 
 else
-	filetype1=$1
-	echo "old filetype:" $filetype1
 	filetype2=$2
-	echo "new filetype:" $filetype2
-    echo "are you sure? (y/n)"
-    read answer
 
-    if [ $answer == y ]; then
+	if [[ $filetype2 == .flac ]] || [[ $filetype2 == .mp3 ]] ; then
 
-    	for i in *$filetype1
+		filetype1=$1
+		echo "old filetype:" $filetype1
+		echo "new filetype:" $filetype2
+	    echo "are you sure? (y/n)"
+	    read answer
 
-do 
+	    if [ $answer == y ]; then
 
-#echo $i
-name=`basename $i $filetype1`
-dir=$(dirname "$i")
-#echo $i
+	    	for i in *$filetype1
 
- `lame -q0 $i ${name}${filetype2}`	
+			do 
 
-done
-
-else 
-
-	echo "DAN NIET JOH!"
+				#echo $i
+				name=`basename $i $filetype1`
+				dir=$(dirname "$i")
+				#echo $i
+				if [ $filetype2 == .mp3 ]; then
 
 
-fi
+				 `lame -q0 $i ${name}${filetype2}`	
+
+				else
+
+					if [ $filetype2 == .flac ]; then
+
+						echo "converteren naar .flac"
+
+					else 
+				
+						echo "Je "	
+
+					fi
+				fi	
+			
+			done
+
+		else 
+
+			echo "DAN NIET JOH!"
 
 
+		fi
+	
+	else
+
+		echo "Je kunt alleen naar .mp3 of .flac converteren"	
+	fi
+		
 fi
 
 
