@@ -27,13 +27,13 @@ else
 			do 
 
 				#echo $i
-				name=`basename $i $filetype1`
+				name=`basename "$i" $filetype1`
 				dir=$(dirname "$i")
 				#echo $i
 				if [ $filetype2 == .mp3 ]; then
 
 
-				 `lame -q0 $i ${name}${filetype2}`	
+				 `lame -q0 "$i" "${name}${filetype2}"`	
 
 				else
 
@@ -43,7 +43,7 @@ else
 
 					else 
 				
-						echo "Je "	
+						echo "Je kunt allen naar .mp3 of .flac converteren"	
 
 					fi
 				fi	
